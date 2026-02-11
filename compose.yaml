@@ -21,27 +21,27 @@ services:
     volumes:
     - ${PWD}/bitwarden:/data
     environment:
-    - LOG_FILE=/data/bitwarden.log
-    - SHOW_PASSWORD_HINT=false
-    - DOMAIN=https://${DOMAIN}          # DOMAIN is set in .env but doesn't have protocol prefix
-    - IP_HEADER=X-Real-IP
-    - ADMIN_TOKEN                       # Value-less variables are set in .env
-    - SIGNUPS_ALLOWED
-    - SMTP_HOST
-    - SMTP_FROM
-    - SMTP_FROM_NAME=Bitwarden (${DOMAIN})
-    - SMTP_PORT
-    - SMTP_SECURITY
-    - SMTP_USERNAME
-    - SMTP_PASSWORD
-    - PUSH_ENABLED
-    - PUSH_INSTALLATION_ID
-    - PUSH_INSTALLATION_KEY
-    - YUBICO_CLIENT_ID
-    - YUBICO_SECRET_KEY
-    - YUBICO_SERVER
-    - ORG_CREATION_USERS
-    - TZ
+      LOG_FILE: /data/bitwarden.log
+      SHOW_PASSWORD_HINT: "false"
+      DOMAIN: "https://${DOMAIN}"          # DOMAIN is set in .env but doesn't have protocol prefix
+      IP_HEADER: X-Real-IP
+      ADMIN_TOKEN: ${ADMIN_TOKEN}                       # Value-less variables are set in .env
+      SIGNUPS_ALLOWED: ${SIGNUPS_ALLOWED}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_FROM: ${SMTP_FROM}
+      SMTP_FROM_NAME: Bitwarden (${DOMAIN})
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_SECURITY: ${SMTP_SECURITY}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      PUSH_ENABLED: ${PUSH_ENABLED}
+      PUSH_INSTALLATION_ID: ${PUSH_INSTALLATION_ID}
+      PUSH_INSTALLATION_KEY: ${PUSH_INSTALLATION_KEY}
+      YUBICO_CLIENT_ID: ${YUBICO_CLIENT_ID}
+      YUBICO_SECRET_KEY: ${YUBICO_SECRET_KEY}
+      YUBICO_SERVER: ${YUBICO_SERVER}
+      ORG_CREATION_USERS: ${ORG_CREATION_USERS}
+      TZ: ${TZ}
 
 
   backup:
@@ -59,24 +59,24 @@ services:
       - ${PWD}/bitwarden/backups:/data/backups
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-    - BACKUP                            # Value-less variables are set in .env
-    - BACKUP_SCHEDULE
-    - BACKUP_DAYS
-    - BACKUP_DIR
-    - BACKUP_ENCRYPTION_KEY
-    - BACKUP_EMAIL_TO
-    - BACKUP_EMAIL_NOTIFY
-    - BACKUP_RCLONE_CONF
-    - BACKUP_RCLONE_DEST
-    - BACKUP_ENV
-    - SMTP_HOST
-    - SMTP_FROM
-    - SMTP_FROM_NAME=Bitwarden Backup (${DOMAIN})
-    - SMTP_PORT
-    - SMTP_SECURITY
-    - SMTP_USERNAME
-    - SMTP_PASSWORD
-    - TZ
+      BACKUP: ${BACKUP}                            # Value-less variables are set in .env
+      BACKUP_SCHEDULE: ${BACKUP_SCHEDULE}
+      BACKUP_DAYS: ${BACKUP_DAYS}
+      BACKUP_DIR: ${BACKUP_DIR}
+      BACKUP_ENCRYPTION_KEY: ${BACKUP_ENCRYPTION_KEY}
+      BACKUP_EMAIL_TO: ${BACKUP_EMAIL_TO}
+      BACKUP_EMAIL_NOTIFY: ${BACKUP_EMAIL_NOTIFY}
+      BACKUP_RCLONE_CONF: ${BACKUP_RCLONE_CONF}
+      BACKUP_RCLONE_DEST: ${BACKUP_RCLONE_DEST}
+      BACKUP_ENV: ${BACKUP_ENV}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_FROM: ${SMTP_FROM}
+      SMTP_FROM_NAME: Bitwarden Backup (${DOMAIN})
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_SECURITY: ${SMTP_SECURITY}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      TZ: ${TZ}
 
 
   proxy:
@@ -96,10 +96,10 @@ services:
     - 80:80                             # Port 80 is necessary for Let's Encrypt ACME
     - 443:443
     environment:
-    - ACME_AGREE=true                   # agree to ACME for auto HTTPS
-    - DOMAIN                            # Value-less variables are set in .env
-    - EMAIL
-    - TZ
+      ACME_AGREE: "true"                   # agree to ACME for auto HTTPS
+      DOMAIN: ${DOMAIN}                            # Value-less variables are set in .env
+      EMAIL: ${EMAIL}
+      TZ: ${TZ}
 
 
   ddns:
@@ -115,9 +115,9 @@ services:
     volumes:
     - ${PWD}/ddns:/config
     environment:
-    - PUID
-    - PGID
-    - TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
 
 
   # Uncomment if you want fail2ban to send e-mails,
@@ -162,10 +162,10 @@ services:
     - NET_ADMIN
     - NET_RAW
     environment:
-    - F2B_DB_PURGE_AGE=30d
-    - F2B_LOG_LEVEL=INFO
-    - F2B_IPTABLES_CHAIN=INPUT
-    - TZ
+      F2B_DB_PURGE_AGE: 30d
+      F2B_LOG_LEVEL: INFO
+      F2B_IPTABLES_CHAIN: INPUT
+      TZ: ${TZ}
 
 
   countryblock:
@@ -185,9 +185,9 @@ services:
     - NET_ADMIN
     - NET_RAW
     environment:
-    - COUNTRIES
-    - COUNTRYBLOCK_SCHEDULE
-    - TZ
+      COUNTRIES: ${COUNTRIES}
+      COUNTRYBLOCK_SCHEDULE: ${COUNTRYBLOCK_SCHEDULE}
+      TZ: ${TZ}
 
 
   watchtower:
@@ -203,9 +203,9 @@ services:
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
     environment:
-    - WATCHTOWER_CLEANUP=true
-    - WATCHTOWER_SCHEDULE
-    - TZ
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_SCHEDULE: ${WATCHTOWER_SCHEDULE}
+      TZ: ${TZ}
 
 
 volumes:
