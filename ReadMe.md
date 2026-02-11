@@ -68,3 +68,11 @@ See `.env.template` for all available configuration options including:
 - Push notification settings
 - Yubikey 2FA configuration
 - Organization creation restrictions
+
+## Licence
+
+This project is a derivative work:
+- Modifications by Yumin Chen (2026) - Public Domain ([Unlicense](https://unlicense.org/))
+- Original work by Bradford (2020) - MIT Licence
+
+See [Licence](Licence) file for full details.
